@@ -3,7 +3,7 @@ word = 'tattarrattat'
 #word = 'step on no pets' #multiple words
 #word = 'Red rum, sir, is murder' #sentence 
 #word = 'Eva, can I see bees in a cave?' #sentence
-#word = word.scan(/[a-zA-Z]/).join.downcase
+#word = word.scan(/[a-zA-Z]/).join.downcase #needed only for sentence 
 reverse = word.reverse
 puts word == reverse ?  "#{word} is palindrome" : "#{word} is not palindrome"
 
