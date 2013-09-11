@@ -5,14 +5,9 @@ while(i <= n) do
   prime = true
   k = i-1
   while k > 1 do 
-     if i % k == 0
-       prime = false
-       k -= 1
-       break
-     else
-       prime = true 
-       k -= 1      
-     end     
+    prime = i % k == 0 ? false : true
+    k -= 1
+    break unless prime   
   end
   puts i if prime
   i += 1
