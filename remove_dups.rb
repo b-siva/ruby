@@ -9,6 +9,15 @@ array.each do |num|
 end
 puts hash.keys
 
+#use hash direct assignment
+puts 'using hash direct assignment'
+puts '----------------------------'
+hash = {}
+array.each do |item|
+  hash[item] = item  
+end
+puts hash.keys
+
 #using temp array
 puts 'using temp array'
 puts '----------------'
