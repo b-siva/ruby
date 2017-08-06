@@ -1,7 +1,7 @@
 #create a Binary tree
 class Node
     attr_accessor  :value, :left, :right
-    def initialize(value, left, right)
+    def initialize(value, left=nil, right=nil)
         @left = left
         @right = right
         @value = value
@@ -532,3 +532,178 @@ root_p.right.right = Node.new(9, nil, nil)
 
 puts root_p.inspect
 max_path_sum(root_p)
+
+def complete_binary_tree_from_array_using_level_order
+    a = [1, 2, 3, 4, 5, 6, 6, 6, 6, 6]
+    root = Node.new(a[0], nil, nil)
+    q = [root]
+    i = 1
+    while i < a.length - 1 do
+        node = q.shift
+        node.left = Node.new(a[i], nil, nil)
+        q.push(node.left)
+        if a[i+1]
+            node.right = Node.new(a[i+1], nil, nil)
+            q.push(node.right)
+        end
+        i += 2
+    end
+    puts root.inspect
+    #puts inorder(root) #=> 6 4 6 2 5 1 6 3 6
+end
+complete_binary_tree_from_array_using_level_order
+
+def print_kth_nodes_from_root
+
+    def inorder_with_k(root, count, k)
+        puts root.value if k == count
+        inorder_with_k(root.left, count + 1, k) if root.left
+        inorder_with_k(root.right, count + 1, k) if root.right
+    end
+
+
+    root = Node.new(20)
+    root.left = Node.new(10)
+    root.right = Node.new(30)
+    root.left.left = Node.new(5)
+    root.left.right = Node.new(15)
+    root.left.right.left = Node.new(12)
+    root.right.left = Node.new(25)
+    root.right.right = Node.new(40)
+    inorder_with_k(root, 1, 3)
+
+end
+
+print_kth_nodes_from_root
+
+def subset_sum(numbers, target, partials)
+   s = partials.inject(0) {|result, num| result += num}
+   puts "sum(#{partials})=#{target}" if s == target
+   return if s >= target
+   (0..(numbers.length - 1)).each do |i|
+     first = numbers[i]
+     remaining = numbers[i+1,numbers.length-1]
+     subset_sum(remaining, target, partials + [first])
+   end
+end
+
+subset_sum([3,9,8,4,5,7,10],15,[])
+
+#minimum cost to reach destination - train
+
+def min_cost(cost, inf)
+    # dist[i] stores minimum cost to reach station i from station 0.
+    dist = {};
+
+    i = 0
+    n = cost.length
+    while i < n do
+        dist[i] = inf
+        i += 1
+    end
+    dist[0] = 0
+
+    # Go through every station and check if using it as an intermediate station gives better path
+    i = 0
+    while i < n do
+        j = i + 1
+        while j < n do
+            c = dist[i] + cost[i][j]
+            dist[j] = c if dist[j] > c
+            j += 1
+        end
+        i += 1
+    end
+    return dist[n-1];
+end
+
+INF = (2**(0.size * 8 -2))
+cost = [
+    [0, 15, 80, 90],
+    [INF, 0, 40, 50],
+    [INF, INF, 0, 70],
+    [INF, INF, INF, 0]
+]
+puts min_cost(cost, INF)
+
+#right view of tree
+def tree
+    root = Node.new(1)
+    root.left = Node.new(2)
+    root.right = Node.new(3)
+    root.left.left = Node.new(4)
+    root.left.right = Node.new(5)
+    root.right.left = Node.new(6)
+    root.right.right = Node.new(7)
+    root.right.right.right = Node.new(8)
+    root
+end
+
+def right_view(root, level, max_level)
+  return if root.nil?
+  if max_level.first < level
+    puts root.value
+    max_level[0] = level
+  end
+  right_view(root.right, level + 1, max_level)
+  right_view(root.left, level + 1, max_level)
+end
+puts "right view"
+right_view(tree, 1, [0])
+
+
+def left_view(root, level, max_level)
+    return if root.nil?
+    if max_level.first < level
+      puts root.value
+      max_level[0] = level
+    end
+    left_view(root.left, level + 1, max_level)
+    left_view(root.right, level + 1, max_level)
+end
+puts "left view"
+left_view(tree, 1, [0])
+
+puts "top view"
+def top_view(root)
+  return if root.nil?
+  hd = 0
+  h = {}
+  q = []
+  q.push([hd, root])
+  while !q.empty? do
+    front = q.shift
+    hd_v = front.first
+    node = front.last
+    #print the first value in hash on that hd level
+    if !h.has_key?(hd_v)
+        h[hd_v] = node.value
+        puts node.value
+    end
+    q.push([hd_v - 1, node.left]) if node.left
+    q.push([hd_v + 1, node.right]) if node.right
+  end
+end
+top_view(tree)
+
+def print_vertical(root)
+    return if root.nil?
+    hd = 0
+    h = {}
+    q = []
+    q.push([hd, root])
+    while !q.empty? do
+        front = q.shift
+        node = front.last
+        hd_v = front.first
+        h[hd_v] = h[hd_v] ? h[hd_v] + [node.value] : [node.value]
+        q.push([hd_v - 1, node.left]) if node.left
+        q.push([hd_v + 1, node.right]) if node.right
+    end
+    h.keys.sort.each do |item|
+      puts "#{item} - #{h[item].join(',')}"
+    end
+ end
+
+ puts "vertical print"
+ print_vertical(tree)

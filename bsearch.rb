@@ -259,12 +259,11 @@ def subset_sum(numbers, target, partials)
    (0..(numbers.length - 1)).each do |i|
      first = numbers[i]
      remaining = numbers[i+1,numbers.length-1]
-     #partials = partials + [first]
      subset_sum(remaining, target, partials + [first])
    end
 end
 
-#subset_sum([3,9,8,4,5,7,10],15,[])
+subset_sum([3,9,8,4,5,7,10],15,[])
 
 def subset_sum(numbers, target, partial=[])
   s = partial.inject 0, :+
