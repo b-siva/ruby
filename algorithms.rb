@@ -664,7 +664,7 @@ end
 puts "left view"
 left_view(tree, 1, [0])
 
-puts "top view"
+
 def top_view(root)
   return if root.nil?
   hd = 0
@@ -684,7 +684,33 @@ def top_view(root)
     q.push([hd_v + 1, node.right]) if node.right
   end
 end
+puts "top view"
 top_view(tree)
+
+
+def bottom_view(root)
+  return if root.nil?
+  hd = 0
+  h = {}
+  q = []
+  q.push([hd, root])
+  while !q.empty? do
+    front = q.shift
+    hd_v = front.first
+    node = front.last
+
+    #add and replaces the last value in hash on that hd level
+    h[hd_v] = node.value
+
+    q.push([hd_v - 1, node.left]) if node.left
+    q.push([hd_v + 1, node.right]) if node.right
+  end
+  h.keys.sort.each do |item|
+    puts "#{item} - #{h[item]}"
+  end
+end
+puts "bottom view"
+bottom_view(tree)
 
 def print_vertical(root)
     return if root.nil?
