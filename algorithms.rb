@@ -733,3 +733,44 @@ def print_vertical(root)
 
  puts "vertical print"
  print_vertical(tree)
+
+def find_consecutive_three_sum(array, target)
+
+  def loop_array(array, i, sum, start_index, end_index, target)
+      while i < array.length-2 do
+        if sum == target
+            return true
+        else
+            sum = sum - array[start_index]
+            start_index += 1
+            sum = sum + array[end_index]
+            end_index += 1
+        end
+        i+= 1
+      end
+      return false
+  end
+
+  sum = array[0] + array[1] + array[2]
+  start_index = 0
+  end_index = 3
+  i = 2
+  loop_array(array, i, sum, start_index, end_index, target)
+end
+
+puts find_consecutive_three_sum([1,2,1,3,2,8,6,5,1,2,3], 12)
+
+def ordering_string(str, pat)
+    i = j = count = 0
+    patcount = pat.length
+    while i < pat.length && j < str.length do
+        while !(pat[i] == str[j]) && j < str.length do
+            j += 1
+        end
+        j += 1
+        count += 1 if j <= str.length
+        i += 1
+    end
+    return count == patcount
+end
+puts ordering_string('hello world!', '!h')
