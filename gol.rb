@@ -58,6 +58,7 @@ class Graph
       @graph.each_with_index do |row, i|
         row.each_with_index do |col, j|
           live_neighbors = evaluate_neighbours(i,j)
+          puts "live:#{live_neighbors}" if i == 0 && j == 2
           if @graph[i][j].current_state == 0 && live_neighbors == 3
             @graph[i][j].future_state = 1
           else
@@ -77,25 +78,44 @@ class Graph
       @neighbours.each do |location|
         r = location.first + i
         c = location.last + j
-        count += 1 if is_safe?(r,c) && @graph[r][c].value == 1
+        count += 1 if is_safe?(r,c) && @graph[r][c].current_state == 1
       end
       count
     end
 
+    def iterate_n_times
+      i = 1
+      while i < 5 do
+        iterate
+        new_state
+        puts "#{i}: ----------------------"
+        print_values
+        i += 1
+      end
+    end
 
+    def print_values
+      @graph.each_with_index do |row, i|
+        row.each_with_index do |col, j|
+          print @graph[i][j].current_state
+          print " "
+        end
+        puts
+      end
+    end
 
     def print_state
       @graph.each do |item|
         puts item.inspect
       end
       set_initial_state
-      iterate
-      new_state
-      final_state
-      puts "----------------------"
-      @graph.each do |item|
-        puts item.inspect
-      end
+      iterate_n_times
+      #final_state
+      #puts "----------------------"
+      #print_values
+      # @graph.each do |item|
+      #   puts item.inspect
+      # end
     end
 
 end

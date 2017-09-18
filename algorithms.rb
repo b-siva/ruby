@@ -114,8 +114,16 @@ right = slow.nxt.nxt
 puts right.inspect
 
 #flight source-destination problem
+def flight_problem(map)
 
-
+end
+map = [ {'src' => 'LAX', 'dest' => 'VEG'},
+  {'src' => 'VEG', 'dest' => 'SFO'},
+  {'src' => 'SFO', 'dest' => 'SAN'},
+  {'src' => 'SAN', 'dest' => 'POR'},
+  {'src' => 'POR', 'dest' => 'SEA'}
+]
+flight_problem(map)
 #diamond * print problem
 def print_diamond(n)
     i = 1
@@ -760,6 +768,7 @@ end
 
 puts find_consecutive_three_sum([1,2,1,3,2,8,6,5,1,2,3], 12)
 
+#order of string match
 def ordering_string(str, pat)
     i = j = count = 0
     patcount = pat.length
@@ -774,3 +783,32 @@ def ordering_string(str, pat)
     return count == patcount
 end
 puts ordering_string('hello world!', '!h')
+
+#edit distance problem(insert, delete, replace)
+
+def edit_distance(str1, str2)
+  m = str1.length
+  n = str2.length
+
+  i = 0
+  dp = []
+  while i < m do
+    j = 0
+    while j < n do
+      if i == 0
+        dp[i][j] = j
+      elsif j == 0
+        dp[i][j] = i
+      elsif str1[i-1] == str2[j-1]
+        dp[i][j] = dp[i-1][j-1]
+      else
+        dp[i][j] = [dp[i-1][j-1], dp[i-1][j], dp[i][j-1] ].min + 1
+      end
+      j += 1
+    end
+    i += 1
+  end
+  puts dp[m][n]
+end
+edit_distance('sunday', 'saturday')
+
