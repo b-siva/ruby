@@ -807,3 +807,87 @@ t.build('at')
 #puts t
 #puts t.find('atthe')
 
+# str1 = "bcadehh" str2 = "hea"
+# b => 1
+# c => 1
+# a => 1
+# d => 1
+# e => 1
+# h => 2
+
+# h => 1
+# e => 1
+# a => 1
+
+# result = 0
+# b['h'] - a['h'] > 0
+#   result += b['h'] - a['h']
+
+# str2.length - (1 + str1.length)
+# 6 - 3 = 3
+
+# 'abc' 'tac'
+# a => 1
+# b => 1
+# c => 1
+
+# {2, 5, 6, 3, 7, 6, 5, 8}
+# um = { 2 => 1}, maxlen = 1
+# um = { 2 => 1, 5 => 1}, maxlen = 1
+# um = { 2 => 1, 5 => 1, 6=> 2}, maxlen = 2
+# um = { 2 => 1, 5 => 1, 6=> 2, 3 => 2}, maxlen = 2
+# um = { 2 => 1, 5 => 1, 6=> 2, 3 => 2, 7 => 3}, maxlen = 3
+# um = { 2 => 1, 5 => 1, 6=> 2, 3 => 2, 7 => 3, 6 => 4}, maxlen = 4
+# um = { 2 => 1, 5 => 1, 6=> 2, 3 => 2, 7 => 3, 6 => 4, 5 => 5}, maxlen = 5
+# um = { 2 => 1, 5 => 1, 6=> 2, 3 => 2, 7 => 3, 6 => 4, 5 => 3, 8 => 4}, maxlen = 4
+
+# [
+#     [1,2,3],
+#     [4,5,6],
+#     [7,8,9],
+#     [10,11,12]
+# ]
+
+# 123 6912 1110 74 58
+
+# k=0, l=0 , m = 4, n = 3
+
+# k < m && l < n => 0 < 4 && 0 < 3
+# k = l => 0
+# 0,0 0,1 0,2
+
+# k => 1
+
+# i = 1
+# 1,2 2,2 3,2
+
+# k => 1, n => 2
+
+# k < m
+# i = 1;l=0
+# 3,1 3,0
+# m => 3
+# 2,0 1,0
+# l => 1
+
+
+# k => 1 l=> 1 m=> 3 n=>2
+# 1,1
+# k => 2
+
+# 2,1
+
+# n => 1
+
+def max_any_node(root, res)
+    return 0 if root.nil?
+
+    ls = max_any_node(root.left, res)
+    rs = max_any_node(root.right, res)
+
+    max_single = max(max(ls,rs) + root.data, root.data)
+    max_top = max(max_single, ls + rs + root.data)
+    res[0] = max(res[0], max_top)
+    return max_single
+
+end
